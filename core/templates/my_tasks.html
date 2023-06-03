@@ -45,43 +45,4 @@
     </div>
 </div>
 
-<div id="color-demo" class="smooth" style="color:red"
-      hx-get="/colors1" hx-swap="outerHTML" hx-trigger='every 1s'>
-  Color Swap Demo
-</div>
-<button class="fade-me-out"
-        hx-delete="/fade_out_demo"
-        hx-swap="outerHTML swap:1s">
-        Fade Me Out
-</button>
-
-<form hx-post="{% url 'shit' %}">
-    <label>Name:</label><input name="name"><br/>
-    <button>Submit</button>
-</form>
-
-
-<script>
-    // let elements = htmx.findAll("#task-item")
-    // elements.forEach(element => {
-        // htmx.addClass(element, 'line-through');
-    // })
-    let elements = htmx.findAll("#task-item")
-    elements.forEach(element => {
-        htmx.on(element, 'click', function() {
-            htmx.addClass(element, 'line-through')
-        })
-    })
-    
-    let els = htmx.findAll("#task-item")
-    els.forEach(el => {
-        htmx.on("#uncross", 'click', function() {
-            htmx.removeClass(el, 'line-through')
-        })
-    })
-    
-
-</script>
-
-
 {% endblock %}

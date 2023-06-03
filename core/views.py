@@ -35,31 +35,6 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-# same thing but with class-based views. Hellish
-class BookListView(ListView):
-    queryset = Book.objects.all()
-    # Book.objects.filter(number_in_stock__gt=0) you can filter these down to only books in stock
-    template_name = 'index2.html'
-    context_object_name = 'books'
-
-    def get_queryset(self):
-        queryset = super().get_queryset()  # returns the queryset defined above
-        self.filterset = BookFilter(self.request.GET, queryset=queryset)
-        return self.filterset.qs  # qs is the queryset after filtering
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # form needs to be specified bc its not added by default
-        context['form'] = self.filterset.form
-        return context
-
-
-class BookListAPIView(ListAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-
-    filter_backends = (DjangoFilterBackend, )
-    filterset_class = BookFilter
 
 # ============================== TASKLIST APP
 
@@ -111,22 +86,3 @@ def search_task(request):
     context = {'results': results}
     return render(request, 'partials/search-results.html', context)
 
-# =============== HTMX FUCKERY
-
-
-def colors1(request):
-    return HttpResponse("<div id='color-demo' class='smooth' style='color:blue' hx-get='/colors2' hx-swap='outerHTML' hx-trigger='every 1s'>Color Swap Demo</div>")
-
-
-def colors2(request):
-    return HttpResponse("<div id='color-demo' class='smooth' style='color:red' hx-get='/colors1' hx-swap='outerHTML' hx-trigger='every 1s'>Color Swap Demo</div>")
-
-
-@require_http_methods(['DELETE'])
-def fade_out_demo(request):
-    return HttpResponse('<p>piss</p>')
-
-
-def shit(request):
-    name = request.POST.get('name')
-    return HttpResponse('<p>you shat yourself, %s</p>' % name)
