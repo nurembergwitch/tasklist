@@ -1,0 +1,6 @@
+<ul class="list-disc">
+{% for task in tasks %}
+<li id="task-item">{{task.desc}} - <small><i>{{task.category.name}}</i></small> - <small><a href="" hx-delete="{% url 'delete-task' task.pk %}" hx-target="#task-list">[DELETE]</a></small></li>
+<span id="uncross">[uncross]</span>
+{% endfor %}
+</ul>

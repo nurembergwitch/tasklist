@@ -1,0 +1,4 @@
+{% csrf_token %}
+<form action="">
+    <input type="text" hx-post="{% url 'search-task' %}" hx-target="#task-list" hx-trigger="keyup changed delay:500ms" name="search" placeholder="search task...">
+</form>
